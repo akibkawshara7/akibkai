@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://i.imgur.com/YOUR_LOGO.png" alt="AnimeKai API" width="200">
+  <img src="https://i.ibb.co/LMHCkMP/a9ac83a4a9395baac1907c584a52c3bf.jpg" alt="AnimeKai API" width="200">
   <h1>🎬 AnimeKai Next.js API</h1>
   <p><strong>A modern, high-performance anime streaming API built with Next.js 14</strong></p>
   
