@@ -1,4 +1,8 @@
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/leodevil334-eng/AnimeKai-API.git)
+
 # AnimeKai Next.js API
+
+> **Author:** Leo Devil
 
 A **Next.js 14** (App Router) port of the Python/Flask AnimeKai scraper API.  
 All scraping logic lives in `src/lib/`, routes in `src/app/api/`.
