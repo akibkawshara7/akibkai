@@ -70,12 +70,6 @@ bun dev
 Environment Variables
 Create a .env.local file with the following variables:
 
-env
-# Required URLs
-BASE_URL=https://animekai.to
-BASE_URL_CDN=https://cdn.animekai.to
-BASE_API_URL=https://api.animekai.to
-
 # Optional: Custom configuration
 NEXT_PUBLIC_API_TIMEOUT=30000
 ⚠️ Note: All environment variables are server-only and never exposed to the browser.
