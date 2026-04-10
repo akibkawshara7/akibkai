@@ -16,6 +16,11 @@ import type {
   MostSearchedItem,
 } from "../types";
 
+
+
+//import axios from "axios";
+
+
 // ---------- most-searched ----------
 
 export async function scrapeMostSearched(): Promise<MostSearchedItem[]> {
@@ -133,18 +138,25 @@ export async function scrapeHome(): Promise<HomeData> {
 
   // Banner
   const banner: BannerItem[] = [];
-  $(".swiper-slide").each((_, el) => {
+  const slides = $(".swiper-slide").toArray();
+
+  for (const el of slides) {
     const slide = $(el);
+
     const style = slide.attr("style") ?? "";
     const poster = style.includes("url(")
       ? style.split("url(")[1].split(")")[0]
       : "";
+
     const titleTag = slide.find("p.title");
     const href = slide.find("a.watch-btn").attr("href") || "";
     const id = href.startsWith("/watch/") ? href.slice(7) : "";
+
     const title = titleTag.text().trim();
     const japanese_title = titleTag.attr("data-jp") ?? "";
+
     const description = slide.find("p.desc").text().trim();
+
     const infoEl = slide.find(".info");
     const { sub, dub, animeType } = parseInfoSpans($, infoEl);
 
@@ -157,9 +169,7 @@ export async function scrapeHome(): Promise<HomeData> {
       }
     });
 
-    let rating = "",
-      release = "",
-      quality = "";
+    let rating = "", release = "", quality = "";
     slide.find(".mics > div").each((_, div) => {
       const lbl = $(div).find("div").first().text().trim().toLowerCase();
       const val = $(div).find("span").first().text().trim();
@@ -170,22 +180,23 @@ export async function scrapeHome(): Promise<HomeData> {
 
     if (title) {
       banner.push({
-        id: id,
-        title: title,
-        japanese_title: japanese_title,
-        description: description,
-        poster: poster,
+        id,
+        title,
+        japanese_title,
+        description,
+        poster,
         url: href ? `${base}${href}` : "",
         sub_episodes: sub,
         dub_episodes: dub,
         type: animeType,
-        genres: genres,
-        rating: rating,
-        release: release,
-        quality: quality,
+        genres,
+        rating,
+        release,
+        quality,
       });
     }
-  });
+  }
+
 
   // Latest
   const latest: LatestItem[] = [];
@@ -254,8 +265,6 @@ export async function scrapeHome(): Promise<HomeData> {
 
   return { banner, latest_updates: latest, top_trending };
 }
-
-// ---------- anime info ----------
 
 // ---------- anime info ----------
 
