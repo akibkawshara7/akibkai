@@ -257,6 +257,8 @@ export async function scrapeHome(): Promise<HomeData> {
 
 // ---------- anime info ----------
 
+// ---------- anime info ----------
+
 export async function scrapeAnimeInfo(slug: string): Promise<AnimeDetail> {
   const url = `${config.ANIMEKAI_URL}watch/${slug}`;
   const res = await fetch(url, { headers: HEADERS, next: { revalidate: 300 } });
@@ -285,9 +287,21 @@ export async function scrapeAnimeInfo(slug: string): Promise<AnimeDetail> {
     const key = rawKey.trim().toLowerCase().replace(/\s+/g, "_");
     const links = $(div).find("span a");
     detail[key] = links.length
-      ? links.map((_, a) => $(a).text().trim()).get()
+      ? links.map((_, a) => $(a).attr("href") || $(a).text().trim()).get()
       : rest.join(":").trim();
   });
+
+  let mal_id = "";
+  let al_id = "";
+  if (Array.isArray(detail.links)) {
+    for (const link of detail.links as string[]) {
+      if (link.includes("myanimelist.net/anime/")) {
+        mal_id = link.split("/anime/")[1]?.split("/")[0] ?? "";
+      } else if (link.includes("anilist.co/anime/")) {
+        al_id = link.split("/anime/")[1]?.split("/")[0] ?? "";
+      }
+    }
+  }
 
   const seasons = $(".swiper-wrapper.season .aitem")
     .map((_, el) => {
@@ -321,6 +335,8 @@ export async function scrapeAnimeInfo(slug: string): Promise<AnimeDetail> {
 
   return {
     ani_id,
+    mal_id,
+    al_id,
     title: $("h1.title").first().text().trim(),
     japanese_title: $("h1.title").first().attr("data-jp") ?? "",
     description: $(".desc").first().text().trim(),
