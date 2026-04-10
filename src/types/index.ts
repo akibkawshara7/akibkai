@@ -70,6 +70,8 @@ export interface AnimeDetail {
   type: string;
   rating: string;
   mal_score: string;
+  mal_id: string;
+  al_id: string;
   detail: Record<string, string | string[]>;
   seasons: SeasonItem[];
   episodes: Episode[];
@@ -91,6 +93,7 @@ export interface Episode {
   token: string;
   has_sub: boolean;
   has_dub: boolean;
+  image?: string;
 }
 
 export interface Server {
